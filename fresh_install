@@ -1,0 +1,65 @@
+!#/bin/bash
+
+## Terra's script for fresh Fedora installs.
+## This will grab the following packages, as well as config files, and make
+## necessary changes.
+##
+## - GroupInstall "Development Tools"
+## - rxvt-unicode, tmux, zsh
+## - fluxbox, fbdesk, feh
+## - thunar
+## - midori
+## - keepassx
+## - emacs (emacs, emacs-goodies, emacs-goodies-el)
+## - elinks
+## - mutt
+## - calcurse
+## - weechat
+## - bitlbee
+## - mc
+## - calcurse
+## - gnupg
+## - git, bzr
+## - automake, libtool
+## - Java (java-1.8.0-openjdk{-devel}, icedtea-web
+## - dropbox
+
+## Run a full update
+
+su -c 'yum -y update'
+
+## Grab the Development Tools group
+
+su -c 'yum -y groupinstall "Development Tools"'
+
+## Grab the packages from the Fedora repositories
+
+su -c "yum -y install rxvt-unicode tmux zsh fluxbox fbdesk feh thunar midori keepassx emacs emacs-goodies emacs-goodies-el elinks mutt calcurse weechat bitlbee mc calcurse gnupg git bzr automake libtool java-1.8.0-openjdk java-1.8.0-openjdk-devel icedtea-web"
+
+## Grab dropbox, extract it, grab the python script, and start the daemon
+
+cd ~ 
+wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+wget https://www.dropbox.com/download?dl=packages/dropbox.py
+chmod +x dropbox.py
+./dropbox.py start
+
+## Grab the git repo with the config files and set them into the home directory
+
+git clone http://github.com/teradyne-ezeri/config-files
+cd ./config-files 
+cp -t ~/ .Xresources .tmux.conf .muttrc .zshrc .zshenv .emacs
+
+## Set xrdb to use the configuration in .Xresources
+
+cd ~/
+xrdb -merge .Xresources
+
+## Set the shell to zsh, though it will need the password
+
+chsh -s /bin/zsh
+
+## Since Anaconda has a habit of ignoring hostname settings on install, set the machine hostname
+
+read -p "Enter hostname for this system: " newhostname
+su -c "echo $newhostname > /etc/hostname"
