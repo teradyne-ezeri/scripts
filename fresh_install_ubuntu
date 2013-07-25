@@ -1,0 +1,55 @@
+#!/bin/bash
+
+## Terra's script for fresh Ubuntu installs.
+## This will grab the following packages, as well as config files, and make
+## necessary changes.
+##
+## - build-essentials
+## - rxvt-unicode, tmux, zsh
+## - fluxbox, fbdesk, feh, xcompmgr
+## - thunar
+## - midori
+## - keepassx
+## - emacs, emacs-goodies-el
+## - elinks, abook, mutt, calcurse
+## - weechat, bitlbee
+## - mc, atop
+## - git, bzr
+## - automake, libtool
+## - Java (openjdk-6{-dbg, -jdk, -jre}, icedtea-6-plugin)
+## - dropbox
+## - Steam
+## - mplayer
+## - ubuntu-restricted-extras
+
+## Run a full update
+
+sudo apt-get update
+sudo apt-get upgrade
+
+## Grab packages from Ubuntu's repositories
+
+sudo apt-get install build-essentials rxvt-unicode tmux zsh fluxbox fbdesk feh xcompmgr thunar midori keepassx emacs emacs-goodies-el elinks abook mutt calcurse weechat bitlbee mc atop git bzr automake libtool openjdk-6-dbg openjdk-6-jdk openjdk-6-jre icedtea-6-plugin mplayer ubuntu-restricted-extras
+
+## Grab dropbox, extract it, grab the python script, and start the daemon
+
+cd ~
+wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+wget "https://www.dropbox.com/download?dl=packages/dropbox.py"
+chmod +x dropbox.py
+./dropbox.py start
+
+## Grab the git repo with the config files and set them into the home directory
+
+git clone https://github.com/teradyne-ezeri/config-files
+cd ./config-files
+cp -t ~/ .Xresources .tmux.conf .muttrc .zshrc .zshenv .emacs
+
+## set xrdb to use the configuration in .Xresources
+
+cd ~/
+xrdb -merge .Xresources
+
+## Set the shell to zsh
+
+chsh -s /bin/zsh
