@@ -36,12 +36,15 @@ su -c "yum -y install rxvt-unicode tmux zsh fluxbox fbdesk feh xcompmgr thunar m
 
 cd ~ 
 wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-wget "https://www.dropbox.com/download?dl=packages/dropbox.py"
+wget -O - "https://www.dropbox.com/download?dl=packages/dropbox.py" > dropbox.py
 chmod +x dropbox.py
 ./dropbox.py start
 
-## Grab the git repo with the config files and set them into the home directory
+## Grab the git repos, then copy the config files into the home directory
 
+mkdir github_repos
+cd ./github_repos
+git clone https://github.com/teradyne-ezeri/scripts
 git clone https://github.com/teradyne-ezeri/config-files
 cd ./config-files 
 cp -t ~/ .Xresources .tmux.conf .muttrc .zshrc .zshenv .emacs
