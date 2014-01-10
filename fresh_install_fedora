@@ -17,7 +17,7 @@
 ## - gnupg
 ## - git, bzr, wget
 ## - automake, libtool
-## - Java (java-1.8.0-openjdk{-devel}, icedtea-web
+## - Java
 ## - dropbox
 
 ## Run a full update
@@ -26,11 +26,15 @@ su -c 'yum -y update'
 
 ## Grab the Development Tools group
 
-su -c 'yum -y groupinstall "Development Tools"'
+su -c 'yum -y groups install "Development Tools"'
 
 ## Grab the packages from the Fedora repositories
 
-su -c "yum -y install rxvt-unicode tmux zsh fluxbox fbdesk feh xcompmgr thunar midori keepassx emacs emacs-goodies emacs-goodies-el elinks abook mutt calcurse weechat bitlbee mc htop gnupg git bzr wget automake libtool java-1.8.0-openjdk java-1.8.0-openjdk-devel icedtea-web"
+su -c "yum -y install rxvt-unicode tmux zsh fluxbox fbdesk feh xcompmgr thunar midori keepassx emacs emacs-goodies emacs-goodies-el elinks abook mutt calcurse weechat bitlbee mc htop gnupg git bzr wget automake libtool java-1.7.0-openjdk java-1.7.0-openjdk-devel icedtea-web"
+
+## Need the Japanese Support group as well
+
+su -c 'yum -y groups install "Japanese Support"'
 
 ## Grab dropbox, extract it, grab the python script, and start the daemon
 
