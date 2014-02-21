@@ -23,8 +23,6 @@
 ## - htop (Better top replacement)
 ## 
 ## GUI tools
-## - fluxbox, fbdesk, feh, xcompmgr (Fluxbox stuff)
-## - PCManFM (File Manager)
 ## - dropbox (File Sync)
 
 ## Run a full update
@@ -35,7 +33,7 @@ yum -y update
 ## Grab the Development Tools group
 
 read -p "Would you like to install the dev toolchain [Y/n]" devtoolask
-if [[ $devtoolask =~ ^([yY][eE][sS]|[yY])$ ]]
+if [[ $devtoolask =~ ^[yY]([eE][sS])$ ]]
 then
 yum -y groups install "Development Tools"
 else
@@ -60,13 +58,13 @@ fi
 ## Grab the other stuff
 
 echo "Other packages to be fetched include the following:"
-echo "Java JDK and JRE, Fluxbox, PCManFM, rxvt-unicode,"
+echo "Java JDK and JRE, enlightenment, rxvt-unicode,"
 echo "libtool, and automake."
 
 read -p "Would you like to install these packages? [Y/n]" guitoolask
 if [[ $guitoolask =~ ^([yY][eE][sS]|[yY])$ ]]
 then
-yum -y install java-1.7.0-openjdk java-1.7.0-openjdk-devel icedtea-web automake libtool fluxbox fbdesk feh xcompmgr pcmanfm
+yum -y install java-1.7.0-openjdk java-1.7.0-openjdk-devel icedtea-web automake libtool enlightenment
 else
 echo "Okay, moving on."
 fi
